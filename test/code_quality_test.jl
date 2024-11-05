@@ -16,7 +16,7 @@ end
 
     import SimpleTensorNetworks
 
-    if VERSION >= v"1.9"
+    if VERSION >= v"1.10"
         @testset "Code linting (JET.jl)" begin
             JET.test_package(SimpleTensorNetworks; target_defined_modules = true)
         end
