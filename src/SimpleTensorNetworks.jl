@@ -1,5 +1,5 @@
 module SimpleTensorNetworks
 
-greet() = print("Hello World!")
+include("index.jl")
 
 end
