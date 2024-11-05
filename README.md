@@ -1,18 +1,17 @@
-# T4ATemplate
+# SimpleTensorNetworks
 
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tensor4all.github.io/T4ATemplate.jl/dev)
-[![CI](https://github.com/tensor4all/T4ATemplate.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/tensor4all/T4ATemplate.jl/actions/workflows/CI.yml)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tensor4all.github.io/SimpleTensorNetworks.jl/dev)
+[![CI](https://github.com/tensor4all/SimpleTensorNetworks.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/tensor4all/SimpleTensorNetworks.jl/actions/workflows/CI.yml)
 
-The [T4ATemplate module](https://github.com/tensor4all/T4ATemplate.jl) provides a tempalte for a Julia package.
+This library implements a minimal subset of tensor network functionality required for `TensorCrossInterpolation.jl`. The development draws significant inspiration from `ITensorNetworks.jl`.
 
-1. Git clone this repository to a local machine.
-2. Update UUID and the package name in Project.toml.
-3. Rename `src/T4ATemplate.jl`.
-4. Replace `T4ATempalte` throughtout `src/`, `test/` and `docs/` by the new package name.
+Feature list:
 
+- Similar functionality to `ITensors.Index` and `ITensors.ITensor` without type instability
+- Contraction operations for two tensor objects
+- Tree tensor network structure based on `DataGraphs.jl`
 
-One can use the following command on Mac to generate a new UUID:
+Remarks:
 
-```
-uuidgen | tr "[:upper:]" "[:lower:]"
-```
+- Maintain type stability wherever possible to support future static compilation with `juliac`.
+- Feedback to `ITensorNetworks.jl` is encouraged. For instance, `DataGraphs.jl` lacks sufficient documentation, and contributing to its documentation could be beneficial.

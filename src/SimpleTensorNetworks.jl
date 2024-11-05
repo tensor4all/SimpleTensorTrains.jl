@@ -1,4 +1,4 @@
-module T4ATemplate
+module SimpleTensorNetworks
 
 greet() = print("Hello World!")
 

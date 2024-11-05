@@ -1,8 +1,8 @@
 @testitem begin
     using Aqua
-    import T4ATemplate
+    import SimpleTensorNetworks
 
     @testset "Aqua" begin
-        Aqua.test_stale_deps(T4ATemplate)
+        Aqua.test_stale_deps(SimpleTensorNetworks)
     end
 end

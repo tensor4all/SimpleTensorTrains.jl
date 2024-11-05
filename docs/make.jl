@@ -1,14 +1,14 @@
-using T4ATemplate
+using SimpleTensorNetworks
 using Documenter
 
-DocMeta.setdocmeta!(T4ATemplate, :DocTestSetup, :(using T4ATemplate); recursive=true)
+DocMeta.setdocmeta!(SimpleTensorNetworks, :DocTestSetup, :(using SimpleTensorNetworks); recursive=true)
 
 makedocs(;
-    modules=[T4ATemplate],
+    modules=[SimpleTensorNetworks],
     authors="H. Shinaoka <h.shinaoka@gmail.com>",
-    sitename="T4ATemplate.jl",
+    sitename="SimpleTensorNetworks.jl",
     format=Documenter.HTML(;
-        canonical="https://github.com/tensor4all/T4ATemplate.jl",
+        canonical="https://github.com/tensor4all/SimpleTensorNetworks.jl",
         edit_link="main",
         assets=String[]),
     pages=[
@@ -17,6 +17,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/tensor4all/T4ATemplate.jl.git",
+    repo="github.com/tensor4all/SimpleTensorNetworks.jl.git",
     devbranch="main",
 )

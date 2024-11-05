@@ -1,8 +1,8 @@
 ```@meta
-CurrentModule = T4ATemplate
+CurrentModule = SimpleTensorNetworks
 ```
 
-# T4ATemplate
+# SimpleTensorNetworks
 
-This is the documentation for [T4ATemplate](https://github.com/tensor4all/T4ATemplate.jl).
+This is the documentation for [SimpleTensorNetworks](https://github.com/tensor4all/SimpleTensorNetworks.jl).
 
