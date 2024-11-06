@@ -1,6 +1,3 @@
-using DataGraphs: DataGraphs, DataGraph
-using NamedGraphs: NamedGraphs, NamedEdge, NamedGraph, vertextype, vertices
-
 """
 Generic tensor network data structure
 """
@@ -20,6 +17,10 @@ function SimpleTensorNetwork(ts::AbstractVector{<:AbstractIndexedArray})
       tn[v] = ts[v]
     end
     return tn
+end
+
+function Base.setindex!(tn::SimpleTensorNetwork, t::AbstractIndexedArray, v::Int)
+    tn.data_graph[v] = t
 end
 
 """
