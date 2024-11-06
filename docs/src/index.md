@@ -14,3 +14,15 @@ This is the documentation for [SimpleTensorNetworks](https://github.com/tensor4a
 Modules = [SimpleTensorNetworks]
 Pages = ["index.jl"]
 ```
+
+## IndexedArray
+```@autodocs
+Modules = [SimpleTensorNetworks]
+Pages = ["indexedarray.jl"]
+```
+
+## contraction
+```@autodocs
+Modules = [SimpleTensorNetworks]
+Pages = ["contraction.jl"]
+```
