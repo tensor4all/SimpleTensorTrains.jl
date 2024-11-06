@@ -12,3 +12,12 @@ struct Index <: AbstractIndex
 end
 
 dim(index::Index) = index.dim
+
+"""
+Returns if a given vector/set of indices contains only unique indices
+"""
+function isunique(
+    indices::Union{AbstractVector{IndT},Set{IndT}},
+) where {IndT<:AbstractIndex}
+    return length(indices) == length(Set(indices))
+end
