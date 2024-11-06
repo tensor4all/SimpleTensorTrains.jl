@@ -45,6 +45,17 @@ Get the underlying data of an IndexedArray
 """
 data(A::IndexedArray) = A.data
 
+"""
+Permute the indices of an IndexedArray
+
+indices: The new indices (list, tuple, etc.)
+"""
+function permute(A::IndexedArray, inds)
+    perm = [findfirst(==(i), indices(A)) for i in inds]
+    IndexedArray(permutedims(data(A), perm), inds)
+end
+
+
 Base.isapprox(A::IndexedArray, B::IndexedArray; kwargs...) =
     isapprox(data(A), data(B); kwargs...)
 
