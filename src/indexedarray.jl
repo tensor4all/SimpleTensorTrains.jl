@@ -65,4 +65,5 @@ Base.permutedims(A::IndexedArray, perm::AbstractVector{Int}) =
 """
 Return if two IndexedArrays have common indices
 """
-hascommondindices(A::IndexedArray, B::IndexedArray) = !isempty(intersect(indices(A), indices(B)))
+hascommondindices(A::IndexedArray, B::IndexedArray) =
+    !isempty(intersect(indices(A), indices(B)))

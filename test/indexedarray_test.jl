@@ -12,7 +12,8 @@
         arr = IndexedArray(ones(2, 3), [Index(2, "a"), Index(3, "b")])
 
         @test indices(permutedims(arr, [2, 1])) == [Index(3, "b"), Index(2, "a")]
-        @test indices(permute(arr, [Index(3, "b"), Index(2, "a")])) == [Index(3, "b"), Index(2, "a")]
+        @test indices(permute(arr, [Index(3, "b"), Index(2, "a")])) ==
+              [Index(3, "b"), Index(2, "a")]
     end
 
 end

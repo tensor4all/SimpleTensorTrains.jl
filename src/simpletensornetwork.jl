@@ -1,7 +1,7 @@
 """
 Generic tensor network data structure
 """
-mutable struct SimpleTensorNetwork# <: AbstractDataGraph{Int,IndexedArray,IndexedArray}
+mutable struct SimpleTensorNetwork <: AbstractDataGraph{Int,IndexedArray,IndexedArray}
     # data_graph: (undirected) graph of the tensor network
     #   An integer is assigned to each vertex (starting from 1 and increasing one by one).
     #   We can place an IndexedArray at each vertex of the graph, and an edge between two vertices.
@@ -28,11 +28,11 @@ function SimpleTensorNetwork(ts::AbstractVector{<:AbstractIndexedArray})
     return tn
 end
 
-# We need to define the following functions to use DFS
-#data_graph(tn::SimpleTensorNetwork) = getfield(tn, :data_graph)
-#data_graph_type(TN::Type{<:SimpleTensorNetwork}) = fieldtype(TN, :data_graph)
-#DataGraphs.underlying_graph(tn::SimpleTensorNetwork) = underlying_graph(data_graph(tn))
-#DataGraphs.underlying_graph_type(TN::Type{<:SimpleTensorNetwork}) = fieldtype(data_graph_type(TN), :underlying_graph)
+data_graph(tn::SimpleTensorNetwork) = getfield(tn, :data_graph)
+data_graph_type(TN::Type{<:SimpleTensorNetwork}) = fieldtype(TN, :data_graph)
+DataGraphs.underlying_graph(tn::SimpleTensorNetwork) = underlying_graph(data_graph(tn))
+DataGraphs.underlying_graph_type(TN::Type{<:SimpleTensorNetwork}) =
+    fieldtype(data_graph_type(TN), :underlying_graph)
 
 function Base.setindex!(tn::SimpleTensorNetwork, t::AbstractIndexedArray, v::Int)
     tn.data_graph[v] = t
@@ -45,7 +45,11 @@ end
 """
 Return if a tensor network `tn` has a cycle. If it has not a cycle, `tn` is a tree tensor network.
 """
-Graphs.is_cyclic(tn::SimpleTensorNetwork) = Graphs.is_cyclic(tn.data_graph.underlying_graph.position_graph)
+Graphs.is_cyclic(tn::SimpleTensorNetwork) =
+    Graphs.is_cyclic(tn.data_graph.underlying_graph.position_graph)
+
+
+Graphs.has_edge(tn::SimpleTensorNetwork, e::NamedEdge) = Graphs.has_edge(tn.data_graph, e)
 
 """
 Contract all the tensors in a tensor network `tn` and return the result.
@@ -54,7 +58,8 @@ This function works only for tree tensor networks, i.e., `is_cyclic(tn) == false
 
 root_vertex: The vertex to start the contraction. The default is 1.
 """
-function complete_contraction(tn::SimpleTensorNetwork; root_vertex::Int=1)
-    !Graphs.is_cyclic(tn) || error("complete_contraction is not supported only for a tree tensor network.")
+function complete_contraction(tn::SimpleTensorNetwork; root_vertex::Int = 1)
+    !Graphs.is_cyclic(tn) ||
+        error("complete_contraction is not supported only for a tree tensor network.")
 
 end
