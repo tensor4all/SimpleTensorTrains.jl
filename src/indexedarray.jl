@@ -61,3 +61,8 @@ Base.isapprox(A::IndexedArray, B::IndexedArray; kwargs...) =
 
 Base.permutedims(A::IndexedArray, perm::AbstractVector{Int}) =
     IndexedArray(permutedims(data(A), perm), [indices(A)[i] for i in perm])
+
+"""
+Return if two IndexedArrays have common indices
+"""
+hascommondindices(A::IndexedArray, B::IndexedArray) = !isempty(intersect(indices(A), indices(B)))
