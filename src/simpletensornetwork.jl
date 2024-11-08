@@ -8,6 +8,14 @@ mutable struct SimpleTensorNetwork <: AbstractDataGraph{Int,IndexedArray,Indexed
     #   But, the latter is not supported by the current implementation of SimpleTensorNetworks.jl.
     #   This may be useful for supporting the Vidal notation.
     data_graph::DataGraph{Int,IndexedArray,IndexedArray,NamedGraph{Int},NamedEdge{Int}}
+
+    function SimpleTensorNetwork(
+        dg::DataGraph{Int,IndexedArray,IndexedArray,NamedGraph{Int},NamedEdge{Int}},
+    )
+        is_connected(dg) ||
+            error("SimpleTensorNetwork is only supported for a connected graph.")
+        new(dg)
+    end
 end
 
 function SimpleTensorNetwork(ts::AbstractVector{<:AbstractIndexedArray})
@@ -33,14 +41,16 @@ data_graph_type(TN::Type{<:SimpleTensorNetwork}) = fieldtype(TN, :data_graph)
 DataGraphs.underlying_graph(tn::SimpleTensorNetwork) = underlying_graph(data_graph(tn))
 DataGraphs.underlying_graph_type(TN::Type{<:SimpleTensorNetwork}) =
     fieldtype(data_graph_type(TN), :underlying_graph)
+DataGraphs.vertex_data(graph::SimpleTensorNetwork, args...) =
+    vertex_data(data_graph(graph), args...)
+DataGraphs.edge_data(graph::SimpleTensorNetwork, args...) =
+    edge_data(data_graph(graph), args...)
 
 function Base.setindex!(tn::SimpleTensorNetwork, t::AbstractIndexedArray, v::Int)
     tn.data_graph[v] = t
 end
 
-function Base.getindex(tn::SimpleTensorNetwork, v::Int)
-    return tn.data_graph[v]
-end
+Base.getindex(tn::SimpleTensorNetwork, v::Int) = tn.data_graph[v]
 
 """
 Return if a tensor network `tn` has a cycle. If it has not a cycle, `tn` is a tree tensor network.
@@ -61,5 +71,25 @@ root_vertex: The vertex to start the contraction. The default is 1.
 function complete_contraction(tn::SimpleTensorNetwork; root_vertex::Int = 1)
     !Graphs.is_cyclic(tn) ||
         error("complete_contraction is not supported only for a tree tensor network.")
+    res = tn[root_vertex]
+    for nv in neighbors(tn.data_graph, root_vertex)
+        res = res * _contract_subtree(tn, nv, root_vertex)
+    end
+    return res
+end
 
+"""
+Contract all the tensors in a subtree of a tensor network `tn` and return the result.
+
+The subtree is defined by a vertex `v` and its parent vertex `parent_v`.
+Note that `parent_v` is not included in the subtree.
+"""
+function _contract_subtree(tn::SimpleTensorNetwork, v::Int, parent_v::Union{Int,Nothing})
+    res = tn[v]
+    for nv in neighbors(tn.data_graph, v)
+        if nv != parent_v
+            res = contract(res, _contract_subtree(tn, nv, v))
+        end
+    end
+    return res
 end

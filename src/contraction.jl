@@ -1,7 +1,10 @@
 """
 Contract two IndexedArrays over the shared indices.
 """
-function contract(a::IndexedArray{T1,IndT}, b::IndexedArray{T2,IndT}) where {T1,T2,IndT}
+function contract(
+    a::IndexedArray{T1},
+    b::IndexedArray{T2},
+)::IndexedArray{promote_type(T1, T2)} where {T1,T2}
 
     commonindices = intersect(indices(a), indices(b))
     idx_a = ntuple(
@@ -19,6 +22,14 @@ end
 
 
 _getindex(x, indices) = ntuple(i -> x[indices[i]], length(indices))
+
+function Base.:*(
+    a::IndexedArray{T1},
+    b::IndexedArray{T2},
+)::IndexedArray{promote_type(T1, T2)} where {T1,T2}
+    return contract(a, b)
+end
+
 
 function _contract(
     a::AbstractArray{T1,N1},

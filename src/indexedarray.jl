@@ -1,16 +1,13 @@
-abstract type AbstractIndexedArray{T,IndT<:AbstractIndex} end
+abstract type AbstractIndexedArray{T} end
 
 """
 Simple Array with indices
 """
-mutable struct IndexedArray{T,IndT<:AbstractIndex} <: AbstractIndexedArray{T,IndT}
+mutable struct IndexedArray{T} <: AbstractIndexedArray{T}
     data::Array{T} # Type unstable
-    indices::Vector{IndT}
+    indices::Vector{AbstractIndex}
 
-    function IndexedArray(
-        data::Array{T},
-        indices::Vector{IndT},
-    ) where {T,IndT<:AbstractIndex}
+    function IndexedArray(data::Array{T}, indices) where {T}
         if length(data) != prod(dim.(indices))
             throw(
                 ArgumentError(
@@ -21,7 +18,7 @@ mutable struct IndexedArray{T,IndT<:AbstractIndex} <: AbstractIndexedArray{T,Ind
         if size(data) != tuple(map(dim, indices)...)
             throw(ArgumentError("Shape of data does not match the dimensions of indices"))
         end
-        new{T,IndT}(data, indices)
+        new{T}(data, indices)
     end
 end
 
@@ -61,6 +58,13 @@ Base.isapprox(A::IndexedArray, B::IndexedArray; kwargs...) =
 
 Base.permutedims(A::IndexedArray, perm::AbstractVector{Int}) =
     IndexedArray(permutedims(data(A), perm), [indices(A)[i] for i in perm])
+
+function Base.only(tn::IndexedArray{T})::T where {T}
+    if length(tn.data) != 1
+        error("IndexedArray has more than one element")
+    end
+    return tn.data[1]
+end
 
 """
 Return if two IndexedArrays have common indices
