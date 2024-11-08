@@ -26,3 +26,9 @@ Pages = ["indexedarray.jl"]
 Modules = [SimpleTensorNetworks]
 Pages = ["contraction.jl"]
 ```
+
+## SimpleTensorNetwork
+```@autodocs
+Modules = [SimpleTensorNetworks]
+Pages = ["simpletensornetwork.jl"]
+```
