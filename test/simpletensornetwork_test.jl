@@ -1,6 +1,5 @@
 @testitem "simpletensornetwork.jl" begin
-    import SimpleTensorNetworks:
-        Index, dim, IndexedArray, indices, permute, SimpleTensorNetwork
+    import SimpleTensorNetworks: Index, dim, IndexedArray, indices, permute, TensorNetwork
     import Graphs: is_connected, has_edge
 
     @testset "Construction from IndexedArray objects" begin
@@ -14,7 +13,7 @@
         t3 = IndexedArray(rand(2, 2), [c, d])
 
 
-        tn = SimpleTensorNetwork([t1, t2, t3])
+        tn = TensorNetwork([t1, t2, t3])
 
         @test has_edge(tn, 1 => 2)
         @test has_edge(tn, 2 => 1)
@@ -34,7 +33,7 @@
         t3 = IndexedArray(rand(2), [b])
         t4 = IndexedArray(rand(2), [c])
 
-        tn = SimpleTensorNetwork([t1, t2, t3, t4])
+        tn = TensorNetwork([t1, t2, t3, t4])
         @test only(SimpleTensorNetworks.complete_contraction(tn; root_vertex = 1)) ≈
               only(t1 * t2 * t3 * t4)
     end
