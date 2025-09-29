@@ -37,7 +37,6 @@
         return norm(tt1_full - tt2_full) / norm(tt1_full)
     end
 
-    #==
     for alg in algs
         @testset "MPO-MPO contraction (x-y-z) with $alg" begin
             Random.seed!(1234)
@@ -57,7 +56,7 @@
             
             ab_ref = contract(a, b; alg = Algorithm"naive"())
             ab = contract(a, b; alg = Algorithm(alg))
-            @test dist(ab_ref, ab) / norm(ab_ref) < eps[alg]
+            @test relative_error(ab_ref, ab) < eps[alg]
         end
     end
 
@@ -83,7 +82,6 @@
             @test relative_error(ab_ref, ab) < eps[alg]
         end
     end
-    ==#
 
     for alg in algs
         @testset "MPO-MPO contraction (xk-y-zl) with $alg" begin
