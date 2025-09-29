@@ -348,6 +348,26 @@ function Base.:+(alg::Algorithm, stt1::SimpleTensorTrain, stts...)
 end
 
 
+function truncate!(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)::SimpleTensorTrain
+    mps = ITensorMPS.MPS(stt)
+    ITensorMPS.truncate!(mps; cutoff=cutoff, maxdim=maxdim, kwargs...)
+    # Update in place
+    for i in 1:length(stt)
+        stt[i] = mps[i]
+    end
+    return stt
+end
+
+function truncate(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)::SimpleTensorTrain
+    mps = ITensorMPS.MPS(stt)
+    ITensorMPS.truncate!(mps; cutoff=cutoff, maxdim=maxdim, kwargs...)
+    return SimpleTensorTrain(mps)
+end
+
+function maxlinkdim(stt::SimpleTensorTrain)
+    return ITensorMPS.maxlinkdim(ITensorMPS.MPO(stt))
+end
+
 function _extractsite(x::SimpleTensorTrain, n::Int)::Vector{Index}
     if n == 1
         return copy(uniqueinds(x[n], x[n + 1]))
