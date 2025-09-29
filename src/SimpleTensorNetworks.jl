@@ -19,9 +19,17 @@ import DataGraphs:
     vertex_data,
     edge_data
 
-include("index.jl")
-include("indexedarray.jl")
-include("contraction.jl")
-include("simpletensornetwork.jl")
+import ITensors: ITensor, Index, dim
+import ITensorMPS
+import ITensorMPS: directsum
+import ITensors: Algorithm, @Algorithm_str
+import LinearAlgebra
+
+#include("index.jl")
+#include("indexedarray.jl")
+#include("contraction.jl")
+#include("simpletensornetwork.jl")
+
+include("tensortrain.jl")
 
 end
