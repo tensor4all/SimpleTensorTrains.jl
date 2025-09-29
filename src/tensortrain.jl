@@ -27,6 +27,17 @@ function SimpleTensorTrain(data::Vector{ITensor})
     return SimpleTensorTrain(data, 0, length(data) + 1)
 end
 
+# Iterator implementation
+Base.iterate(stt::SimpleTensorTrain) = iterate(stt.data)
+Base.iterate(stt::SimpleTensorTrain, state) = iterate(stt.data, state)
+Base.length(stt::SimpleTensorTrain) = length(stt.data)
+Base.size(stt::SimpleTensorTrain) = size(stt.data)
+Base.getindex(stt::SimpleTensorTrain, i) = stt.data[i]
+Base.setindex!(stt::SimpleTensorTrain, value, i) = (stt.data[i] = value)
+Base.firstindex(stt::SimpleTensorTrain) = 1
+Base.lastindex(stt::SimpleTensorTrain) = length(stt.data)
+Base.eachindex(stt::SimpleTensorTrain) = eachindex(stt.data)
+
 """
 Convert SimpleTensorTrain to ITensorMPS.MPS
 
@@ -336,3 +347,15 @@ function Base.:+(alg::Algorithm, stt1::SimpleTensorTrain, stts...)
     return SimpleTensorTrain(mps_sum, stt1.llim, stt1.rlim)
 end
 
+
+function _extractsite(x::SimpleTensorTrain, n::Int)::Vector{Index}
+    if n == 1
+        return copy(uniqueinds(x[n], x[n + 1]))
+    elseif n == length(x)
+        return copy(uniqueinds(x[n], x[n - 1]))
+    else
+        return copy(uniqueinds(x[n], x[n + 1], x[n - 1]))
+    end
+end
+
+siteinds(x::SimpleTensorTrain) = [_extractsite(x, n) for n in eachindex(x)]

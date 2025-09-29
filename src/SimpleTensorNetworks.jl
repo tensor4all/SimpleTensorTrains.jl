@@ -19,9 +19,8 @@ import DataGraphs:
     vertex_data,
     edge_data
 
-import ITensors: ITensor, Index, dim
+import ITensors: ITensors, ITensor, Index, dim, uniqueinds
 import ITensorMPS
-import ITensorMPS: directsum
 import ITensors: Algorithm, @Algorithm_str
 import LinearAlgebra
 
@@ -30,6 +29,9 @@ import LinearAlgebra
 #include("contraction.jl")
 #include("simpletensornetwork.jl")
 
+include("defaults.jl")
 include("tensortrain.jl")
+
+include("contraction.jl")
 
 end

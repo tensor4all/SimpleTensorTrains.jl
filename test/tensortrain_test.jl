@@ -527,4 +527,101 @@
         @test stt_sum.rlim == stt1.rlim
         @test stt_sum isa SimpleTensorTrain
     end
+
+    @testset "SimpleTensorTrain siteinds function - 2-site MPS" begin
+        # Create test indices
+        i1 = Index(2, "i1")
+        i2 = Index(2, "i2")
+        l1 = Index(3, "Link,l1")
+        
+        # Create test tensors
+        t1 = random_itensor(i1, l1)
+        t2 = random_itensor(l1, i2)
+        
+        # Create SimpleTensorTrain
+        stt = SimpleTensorTrain([t1, t2], 1, 5)
+        
+        # Test siteinds function
+        sites = SimpleTensorNetworks.siteinds(stt)
+        
+        # Check that we get the right number of sites
+        @test length(sites) == 2
+        
+        # Check first site (should contain i1, not l1)
+        @test length(sites[1]) == 1
+        @test sites[1][1] == i1
+        
+        # Check second site (should contain i2, not l1)
+        @test length(sites[2]) == 1
+        @test sites[2][1] == i2
+    end
+
+    @testset "SimpleTensorTrain siteinds function - 3-site MPS" begin
+        # Create test indices
+        i1 = Index(2, "i1")
+        i2 = Index(2, "i2")
+        i3 = Index(2, "i3")
+        l1 = Index(3, "Link,l1")
+        l2 = Index(3, "Link,l2")
+        
+        # Create test tensors
+        t1 = random_itensor(i1, l1)
+        t2 = random_itensor(l1, i2, l2)
+        t3 = random_itensor(l2, i3)
+        
+        # Create SimpleTensorTrain
+        stt = SimpleTensorTrain([t1, t2, t3], 1, 6)
+        
+        # Test siteinds function
+        sites = SimpleTensorNetworks.siteinds(stt)
+        
+        # Check that we get the right number of sites
+        @test length(sites) == 3
+        
+        # Check first site (should contain i1 only)
+        @test length(sites[1]) == 1
+        @test sites[1][1] == i1
+        
+        # Check middle site (should contain i2 only, not l1 or l2)
+        @test length(sites[2]) == 1
+        @test sites[2][1] == i2
+        
+        # Check last site (should contain i3 only)
+        @test length(sites[3]) == 1
+        @test sites[3][1] == i3
+    end
+
+    @testset "SimpleTensorTrain siteinds function - 2-site MPO" begin
+        # Create test indices
+        i1 = Index(2, "i1")
+        i2 = Index(2, "i2")
+        j1 = Index(2, "j1")
+        j2 = Index(2, "j2")
+        l1 = Index(3, "Link,l1")
+        
+        # Create MPO tensors
+        t1 = random_itensor(i1, j1, l1)
+        t2 = random_itensor(l1, i2, j2)
+        
+        # Create SimpleTensorTrain
+        stt = SimpleTensorTrain([t1, t2], 1, 5)
+        
+        # Test siteinds function
+        sites = SimpleTensorNetworks.siteinds(stt)
+        
+        # Check that we get the right number of sites
+        @test length(sites) == 2
+        
+        # Check first site (should contain i1 and j1, not l1)
+        @test length(sites[1]) == 2
+        @test i1 in sites[1]
+        @test j1 in sites[1]
+        @test l1 ∉ sites[1]
+        
+        # Check second site (should contain i2 and j2, not l1)
+        @test length(sites[2]) == 2
+        @test i2 in sites[2]
+        @test j2 in sites[2]
+        @test l1 ∉ sites[2]
+    end
 end
