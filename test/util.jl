@@ -1,4 +1,4 @@
-import SimpleTensorNetworks: SimpleTensorTrain, contract, dist
+import SimpleTensorTrains: SimpleTensorTrain, contract, dist
 import ITensors: ITensors, ITensor, Index, random_itensor
 import ITensorMPS
 import ITensors: Algorithm, @Algorithm_str
@@ -24,7 +24,7 @@ function _random_mpo(rng, sites::Vector{Vector{Index{T}}}; linkdims = 1) where {
 end
 
 function relative_error(tt1::SimpleTensorTrain, tt2::SimpleTensorTrain)
-    sites = SimpleTensorNetworks.siteinds(tt1)
+    sites = SimpleTensorTrains.siteinds(tt1)
     tt1_full = Array(reduce(*, tt1), sites)
     tt2_full = Array(reduce(*, tt2), sites)
     return norm(tt1_full - tt2_full) / norm(tt1_full)

@@ -1,7 +1,7 @@
 @testitem "contraction.jl" begin
     include("util.jl")
 
-    import SimpleTensorNetworks: SimpleTensorTrain, contract, dist
+    import SimpleTensorTrains: SimpleTensorTrain, contract, dist
     import ITensors: ITensors, ITensor, Index, random_itensor
     import ITensorMPS
     import ITensors: Algorithm, @Algorithm_str

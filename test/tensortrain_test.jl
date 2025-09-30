@@ -1,7 +1,7 @@
 @testitem "tensortrain.jl" begin
     include("util.jl")
 
-    import SimpleTensorNetworks: SimpleTensorTrain, dist
+    import SimpleTensorTrains: SimpleTensorTrain, dist
     import ITensors: ITensor, Index, random_itensor
     import ITensorMPS
     import ITensors: Algorithm, @Algorithm_str
@@ -544,7 +544,7 @@
         stt = SimpleTensorTrain([t1, t2], 1, 5)
 
         # Test siteinds function
-        sites = SimpleTensorNetworks.siteinds(stt)
+        sites = SimpleTensorTrains.siteinds(stt)
 
         # Check that we get the right number of sites
         @test length(sites) == 2
@@ -575,7 +575,7 @@
         stt = SimpleTensorTrain([t1, t2, t3], 1, 6)
 
         # Test siteinds function
-        sites = SimpleTensorNetworks.siteinds(stt)
+        sites = SimpleTensorTrains.siteinds(stt)
 
         # Check that we get the right number of sites
         @test length(sites) == 3
@@ -609,7 +609,7 @@
         stt = SimpleTensorTrain([t1, t2], 1, 5)
 
         # Test siteinds function
-        sites = SimpleTensorNetworks.siteinds(stt)
+        sites = SimpleTensorTrains.siteinds(stt)
 
         # Check that we get the right number of sites
         @test length(sites) == 2
@@ -641,16 +641,16 @@
 
         # Test that a + a doubles the bond dimension
         a_plus_a = a + a
-        @test SimpleTensorNetworks.maxlinkdim(a_plus_a) == 6  # 3 * 2 = 6
+        @test SimpleTensorTrains.maxlinkdim(a_plus_a) == 6  # 3 * 2 = 6
 
         # Test truncate! (in-place)
         a_plus_a_truncated = deepcopy(a_plus_a)
-        SimpleTensorNetworks.truncate!(a_plus_a_truncated; maxdim=10)
+        SimpleTensorTrains.truncate!(a_plus_a_truncated; maxdim=10)
 
         @test relative_error(a_plus_a, a_plus_a_truncated) < 1e-13
 
         # Test truncate (creates new object)
-        a_plus_a_truncated_copy = SimpleTensorNetworks.truncate(a_plus_a; maxdim=10)
+        a_plus_a_truncated_copy = SimpleTensorTrains.truncate(a_plus_a; maxdim=10)
 
         @test relative_error(a_plus_a, a_plus_a_truncated_copy) < 1e-13
     end

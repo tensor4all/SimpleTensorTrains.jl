@@ -1,34 +1,34 @@
 ```@meta
-CurrentModule = SimpleTensorNetworks
+CurrentModule = SimpleTensorTrains
 ```
 
-# SimpleTensorNetworks
+# SimpleTensorTrains
 
-This is the documentation for [SimpleTensorNetworks](https://github.com/tensor4all/SimpleTensorNetworks.jl).
+This is the documentation for [SimpleTensorTrains](https://github.com/tensor4all/SimpleTensorTrains.jl).
 
 
 # API
 
 ## Index
 ```@autodocs
-Modules = [SimpleTensorNetworks]
+Modules = [SimpleTensorTrains]
 Pages = ["index.jl"]
 ```
 
 ## IndexedArray
 ```@autodocs
-Modules = [SimpleTensorNetworks]
+Modules = [SimpleTensorTrains]
 Pages = ["indexedarray.jl"]
 ```
 
 ## contraction
 ```@autodocs
-Modules = [SimpleTensorNetworks]
+Modules = [SimpleTensorTrains]
 Pages = ["contraction.jl"]
 ```
 
 ## SimpleTensorNetwork
 ```@autodocs
-Modules = [SimpleTensorNetworks]
+Modules = [SimpleTensorTrains]
 Pages = ["simpletensornetwork.jl"]
 ```

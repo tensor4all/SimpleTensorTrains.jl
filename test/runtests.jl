@@ -1,4 +1,4 @@
 using ReTestItems: runtests, @testitem
-using SimpleTensorNetworks: SimpleTensorNetworks
+using SimpleTensorTrains: SimpleTensorTrains
 
-runtests(SimpleTensorNetworks)
+runtests(SimpleTensorTrains)

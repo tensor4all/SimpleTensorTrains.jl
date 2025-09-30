@@ -1,23 +1,23 @@
-using SimpleTensorNetworks
+using SimpleTensorTrains
 using Documenter
 
 DocMeta.setdocmeta!(
-    SimpleTensorNetworks,
+    SimpleTensorTrains,
     :DocTestSetup,
-    :(using SimpleTensorNetworks);
+    :(using SimpleTensorTrains);
     recursive = true,
 )
 
 makedocs(;
-    modules = [SimpleTensorNetworks],
+    modules = [SimpleTensorTrains],
     authors = "H. Shinaoka <h.shinaoka@gmail.com>",
-    sitename = "SimpleTensorNetworks.jl",
+    sitename = "SimpleTensorTrains.jl",
     format = Documenter.HTML(;
-        canonical = "https://github.com/tensor4all/SimpleTensorNetworks.jl",
+        canonical = "https://github.com/tensor4all/SimpleTensorTrains.jl",
         edit_link = "main",
         assets = String[],
     ),
     pages = ["Home" => "index.md"],
 )
 
-deploydocs(; repo = "github.com/tensor4all/SimpleTensorNetworks.jl.git", devbranch = "main")
+deploydocs(; repo = "github.com/tensor4all/SimpleTensorTrains.jl.git", devbranch = "main")

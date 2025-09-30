@@ -2,10 +2,10 @@
     using Test
     using Aqua
 
-    import SimpleTensorNetworks
+    import SimpleTensorTrains
 
     @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(SimpleTensorNetworks; unbound_args = false, deps_compat = false)
+        Aqua.test_all(SimpleTensorTrains; unbound_args = false, deps_compat = false)
     end
 
 end
@@ -14,12 +14,12 @@ end
     using Test
     using JET
 
-    import SimpleTensorNetworks
+    import SimpleTensorTrains
 
     if VERSION >= v"1.10"
         @testset "Code linting (JET.jl)" begin
             # Run JET with more lenient settings
-            result = JET.report_package(SimpleTensorNetworks; 
+            result = JET.report_package(SimpleTensorTrains; 
                 target_defined_modules = true,
                 toplevel_logger = nothing
             )
