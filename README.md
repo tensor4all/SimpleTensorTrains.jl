@@ -22,35 +22,14 @@ Pkg.add("SimpleTensorTrains")
 
 ## Quick Start
 
-```julia
-using SimpleTensorTrains
-using ITensors, ITensorMPS
-
-# Create a SimpleTensorTrain from an MPS
-mps = randomMPS(siteinds("S=1/2", 10))
-stt = SimpleTensorTrain(mps)
-
-# Perform operations
-stt_sum = stt + stt  # Addition using direct sum
-stt_scaled = 2.0 * stt  # Scalar multiplication
-
-# Contract two tensor trains
-result = contract(stt, stt; alg=Algorithm"fit"(), maxdim=100)
-
-# Truncate
-truncated = truncate(stt; cutoff=1e-10, maxdim=50)
-
-# Get information
-bond_dim = maxlinkdim(stt)
-sites = siteinds(stt)
-```
+TODO: Add quick start example.
 
 ## Key Design Choices
 
 This library makes specific algorithmic choices to ensure numerical accuracy, especially important for operations with quantics tensor trains:
 
 - **Addition**: Uses `Algorithm"directsum"` for exact representation without approximation
-- **Subtraction**: Uses `Algorithm"directsum"` for optimal numerical precision
+- **Subtraction**: Uses `Algorithm"directsum"` for exact representation without approximation
 - **Contraction**: Offers multiple algorithms (fit, densitymatrix, zipup, naive) with sensible defaults
 
 ## Documentation
