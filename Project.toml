@@ -2,6 +2,7 @@ name = "SimpleTensorTrains"
 uuid = "ff6377aa-e1b5-434b-8b4c-a9974c1be246"
 authors = ["Hiroshi Shinaoka <h.shinaoka@gmail.com>"]
 version = "0.1.0"
+license = "Apache-2.0"
 
 [deps]
 ITensorMPS = "0d1a4710-d33b-49a5-8f18-73bdf49b47e2"

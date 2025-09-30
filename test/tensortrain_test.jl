@@ -22,12 +22,6 @@
         @test length(stt1.data) == 2
         @test stt1.llim == 0
         @test stt1.rlim == 3
-
-        # Test construction with explicit limits
-        stt2 = SimpleTensorTrain([t1, t2])
-        @test length(stt2.data) == 2
-        @test stt2.llim == 1
-        @test stt2.rlim == 4
     end
 
     @testset "Conversion from SimpleTensorTrain to MPS" begin

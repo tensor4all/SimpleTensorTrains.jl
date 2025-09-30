@@ -1,4 +1,26 @@
-# Only temporary, until the performance issune in ITensorNetworks.jl is fixed.
+#===
+fitalgorithm.jl - Variational fitting algorithm for tensor train contraction
+
+This file contains code derived from ITensorTDVP.jl
+Original source: https://github.com/ITensor/ITensorTDVP.jl
+(specifically: https://github.com/shinaoka/ITensorTDVP.jl/commit/23e09395cce66215b256aeeaa993fe2c64a0f1c8)
+Copyright (c) ITensorTDVP.jl developers
+Copyright (c) 2025 Hiroshi Shinaoka and contributors (modifications)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Note: This is a temporary implementation until performance issues in ITensorNetworks.jl are resolved.
+====#
 import ITensorMPS: AbstractProjMPO, makeL!, makeR!, set_nsite!, OneITensor, MPO, MPS, linkinds
 import ITensors: contract, siteinds, commoninds, sim, dag, replaceinds, @Algorithm_str
 import Base: copy
