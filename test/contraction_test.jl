@@ -86,7 +86,6 @@
         end
     end
 
-    #==
     for alg in algs
         @testset "MPO-MPO contraction (xk-ym-zl) with $alg" begin
             Random.seed!(1234)
@@ -111,5 +110,4 @@
             @test relative_error(ab_ref, ab) < eps[alg]
         end
     end
-    ==#
 end

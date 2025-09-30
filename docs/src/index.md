@@ -6,29 +6,35 @@ CurrentModule = SimpleTensorTrains
 
 This is the documentation for [SimpleTensorTrains](https://github.com/tensor4all/SimpleTensorTrains.jl).
 
+A simple tensor train (matrix product state/operator) data structure and algorithms built on top of ITensors.jl.
 
-# API
+# API Reference
 
-## Index
-```@autodocs
-Modules = [SimpleTensorTrains]
-Pages = ["index.jl"]
+## Tensor Train Type
+
+```@docs
+SimpleTensorTrain
+SimpleTensorTrain(::Vector{ITensor})
+SimpleTensorTrain(::ITensorMPS.MPS)
+SimpleTensorTrain(::ITensorMPS.MPS, ::Int, ::Int)
+SimpleTensorTrain(::ITensorMPS.MPO)
+SimpleTensorTrain(::ITensorMPS.MPO, ::Int, ::Int)
 ```
 
-## IndexedArray
-```@autodocs
-Modules = [SimpleTensorTrains]
-Pages = ["indexedarray.jl"]
+## Tensor Train Operations
+
+```@docs
+contract
+truncate
+truncate!
+maxlinkdim
+siteinds
 ```
 
-## contraction
-```@autodocs
-Modules = [SimpleTensorTrains]
-Pages = ["contraction.jl"]
-```
+## Default Parameters
 
-## SimpleTensorNetwork
-```@autodocs
-Modules = [SimpleTensorTrains]
-Pages = ["simpletensornetwork.jl"]
+```@docs
+default_maxdim
+default_cutoff
+default_nsweeps
 ```

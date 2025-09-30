@@ -18,6 +18,7 @@ makedocs(;
         assets = String[],
     ),
     pages = ["Home" => "index.md"],
+    checkdocs = :exports,
 )
 
 deploydocs(; repo = "github.com/tensor4all/SimpleTensorTrains.jl.git", devbranch = "main")

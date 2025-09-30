@@ -24,7 +24,7 @@
         @test stt1.rlim == 3
 
         # Test construction with explicit limits
-        stt2 = SimpleTensorTrain([t1, t2], 1, 4)
+        stt2 = SimpleTensorTrain([t1, t2])
         @test length(stt2.data) == 2
         @test stt2.llim == 1
         @test stt2.rlim == 4
@@ -95,7 +95,7 @@
         t2 = random_itensor(i2, i3)
 
         # Start with SimpleTensorTrain
-        stt_original = SimpleTensorTrain([t1, t2], 2, 7)
+        stt_original = SimpleTensorTrain([t1, t2])
 
         # Convert to MPS and back
         mps = ITensorMPS.MPS(stt_original)
@@ -184,7 +184,7 @@
         t2 = random_itensor(i2, j2, i3, j3)
 
         # Start with SimpleTensorTrain
-        stt_original = SimpleTensorTrain([t1, t2], 2, 7)
+        stt_original = SimpleTensorTrain([t1, t2])
 
         # Convert to MPO and back
         mpo = ITensorMPS.MPO(stt_original)
@@ -214,16 +214,14 @@
         t2b = random_itensor(i2, i3)
 
         # Create SimpleTensorTrain objects
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt1 = SimpleTensorTrain([t1a, t2a])
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         # Test addition
         stt_sum = stt1 + stt2
 
         # Check that the result has the correct structure
         @test length(stt_sum.data) == 2
-        @test stt_sum.llim == stt1.llim  # Should preserve llim from first tensor train
-        @test stt_sum.rlim == stt1.rlim  # Should preserve rlim from first tensor train
 
         # Check that the result is a valid SimpleTensorTrain
         @test stt_sum isa SimpleTensorTrain
@@ -254,23 +252,21 @@
         # Create three tensor trains
         t1a = random_itensor(i1, i2)
         t2a = random_itensor(i2, i3)
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
+        stt1 = SimpleTensorTrain([t1a, t2a])
 
         t1b = random_itensor(i1, i2)
         t2b = random_itensor(i2, i3)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         t1c = random_itensor(i1, i2)
         t2c = random_itensor(i2, i3)
-        stt3 = SimpleTensorTrain([t1c, t2c], 3, 7)
+        stt3 = SimpleTensorTrain([t1c, t2c])
 
         # Test multiple addition
         stt_sum = stt1 + stt2 + stt3
 
         # Check that the result has the correct structure
         @test length(stt_sum.data) == 2
-        @test stt_sum.llim == stt1.llim  # Should preserve llim from first tensor train
-        @test stt_sum.rlim == stt1.rlim  # Should preserve rlim from first tensor train
 
         # Strict numerical verification: dist(A, B)/norm(A) < 1e-13
         # Test that SimpleTensorTrain addition matches MPS directsum calculation
@@ -301,7 +297,7 @@
         t2 = random_itensor(i2, i3)
 
         # Create SimpleTensorTrain
-        stt = SimpleTensorTrain([t1, t2], 1, 5)
+        stt = SimpleTensorTrain([t1, t2])
 
         # Test scalar multiplication (left)
         α = 2.5
@@ -309,12 +305,6 @@
 
         # Test scalar multiplication (right)
         stt_scaled2 = stt * α
-
-        # Check that both results are the same
-        @test stt_scaled1.llim == stt.llim
-        @test stt_scaled1.rlim == stt.rlim
-        @test stt_scaled2.llim == stt.llim
-        @test stt_scaled2.rlim == stt.rlim
 
         # Note: Individual tensor scaling tests are removed because
         # scaling each core individually would result in α^2 scaling overall
@@ -354,16 +344,14 @@
         t2b = random_itensor(i2, i3)
 
         # Create SimpleTensorTrain objects
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt1 = SimpleTensorTrain([t1a, t2a])
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         # Test subtraction
         stt_diff = stt1 - stt2
 
         # Check that the result has the correct structure
         @test length(stt_diff.data) == 2
-        @test stt_diff.llim == stt1.llim  # Should preserve llim from first tensor train
-        @test stt_diff.rlim == stt1.rlim  # Should preserve rlim from first tensor train
 
         # Check that the result is a valid SimpleTensorTrain
         @test stt_diff isa SimpleTensorTrain
@@ -394,23 +382,21 @@
         # Create three tensor trains
         t1a = random_itensor(i1, i2)
         t2a = random_itensor(i2, i3)
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
+        stt1 = SimpleTensorTrain([t1a, t2a])
 
         t1b = random_itensor(i1, i2)
         t2b = random_itensor(i2, i3)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         t1c = random_itensor(i1, i2)
         t2c = random_itensor(i2, i3)
-        stt3 = SimpleTensorTrain([t1c, t2c], 3, 7)
+        stt3 = SimpleTensorTrain([t1c, t2c])
 
         # Test multiple subtraction: stt1 - stt2 - stt3
         stt_diff = stt1 - stt2 - stt3
 
         # Check that the result has the correct structure
         @test length(stt_diff.data) == 2
-        @test stt_diff.llim == stt1.llim  # Should preserve llim from first tensor train
-        @test stt_diff.rlim == stt1.rlim  # Should preserve rlim from first tensor train
 
         # Strict numerical verification: dist(A, B)/norm(A) < 1e-13
         # Test that SimpleTensorTrain subtraction matches MPS directsum calculation
@@ -457,11 +443,11 @@
         # Create test tensors
         t1a = random_itensor(i1, i2)
         t2a = random_itensor(i2, i3)
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
+        stt1 = SimpleTensorTrain([t1a, t2a])
 
         t1b = random_itensor(i1, i2)
         t2b = random_itensor(i2, i3)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         # Test norm function
         norm1 = norm(stt1)
@@ -513,11 +499,11 @@
         # Create test tensors
         t1a = random_itensor(i1, i2)
         t2a = random_itensor(i2, i3)
-        stt1 = SimpleTensorTrain([t1a, t2a], 1, 5)
+        stt1 = SimpleTensorTrain([t1a, t2a])
 
         t1b = random_itensor(i1, i2)
         t2b = random_itensor(i2, i3)
-        stt2 = SimpleTensorTrain([t1b, t2b], 2, 6)
+        stt2 = SimpleTensorTrain([t1b, t2b])
 
         # Test addition with default algorithm
         alg = Algorithm("default")
@@ -525,8 +511,6 @@
 
         # Check that the result has the correct structure
         @test length(stt_sum.data) == 2
-        @test stt_sum.llim == stt1.llim
-        @test stt_sum.rlim == stt1.rlim
         @test stt_sum isa SimpleTensorTrain
     end
 
@@ -541,7 +525,7 @@
         t2 = random_itensor(l1, i2)
 
         # Create SimpleTensorTrain
-        stt = SimpleTensorTrain([t1, t2], 1, 5)
+        stt = SimpleTensorTrain([t1, t2])
 
         # Test siteinds function
         sites = SimpleTensorTrains.siteinds(stt)
@@ -572,7 +556,7 @@
         t3 = random_itensor(l2, i3)
 
         # Create SimpleTensorTrain
-        stt = SimpleTensorTrain([t1, t2, t3], 1, 6)
+        stt = SimpleTensorTrain([t1, t2, t3])
 
         # Test siteinds function
         sites = SimpleTensorTrains.siteinds(stt)
@@ -606,7 +590,7 @@
         t2 = random_itensor(l1, i2, j2)
 
         # Create SimpleTensorTrain
-        stt = SimpleTensorTrain([t1, t2], 1, 5)
+        stt = SimpleTensorTrain([t1, t2])
 
         # Test siteinds function
         sites = SimpleTensorTrains.siteinds(stt)

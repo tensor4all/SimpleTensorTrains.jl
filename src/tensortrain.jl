@@ -23,6 +23,19 @@ mutable struct SimpleTensorTrain
     rlim::Int
 end
 
+"""
+    SimpleTensorTrain(data::Vector{ITensor})
+
+Construct a SimpleTensorTrain from a vector of ITensors.
+
+The left and right limits are automatically set to 0 and length(data) + 1 respectively.
+
+# Arguments
+- `data::Vector{ITensor}`: Vector of tensors forming the tensor train
+
+# Returns
+- `SimpleTensorTrain`: A new SimpleTensorTrain object with default limits
+"""
 function SimpleTensorTrain(data::Vector{ITensor})
     return SimpleTensorTrain(data, 0, length(data) + 1)
 end
@@ -348,6 +361,25 @@ function Base.:+(alg::Algorithm, stt1::SimpleTensorTrain, stts...)
 end
 
 
+"""
+    truncate!(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)
+
+Truncate a SimpleTensorTrain in-place by removing small singular values.
+
+This function modifies the SimpleTensorTrain in-place by converting to MPS,
+applying ITensorMPS.truncate!, and updating the tensor data.
+
+# Arguments
+- `stt::SimpleTensorTrain`: The tensor train to truncate (modified in-place)
+
+# Keyword Arguments
+- `cutoff::Real`: Cutoff threshold for singular values (default: `default_cutoff()`)
+- `maxdim::Int`: Maximum bond dimension (default: `default_maxdim()`)
+- `kwargs...`: Additional keyword arguments passed to ITensorMPS.truncate!
+
+# Returns
+- `SimpleTensorTrain`: The modified tensor train (same object as input)
+"""
 function truncate!(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)::SimpleTensorTrain
     mps = ITensorMPS.MPS(stt)
     ITensorMPS.truncate!(mps; cutoff=cutoff, maxdim=maxdim, kwargs...)
@@ -358,12 +390,45 @@ function truncate!(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim
     return stt
 end
 
+"""
+    truncate(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)
+
+Truncate a SimpleTensorTrain by removing small singular values, returning a new object.
+
+This function creates a new SimpleTensorTrain by converting to MPS,
+applying ITensorMPS.truncate!, and creating a new SimpleTensorTrain from the result.
+
+# Arguments
+- `stt::SimpleTensorTrain`: The tensor train to truncate
+
+# Keyword Arguments
+- `cutoff::Real`: Cutoff threshold for singular values (default: `default_cutoff()`)
+- `maxdim::Int`: Maximum bond dimension (default: `default_maxdim()`)
+- `kwargs...`: Additional keyword arguments passed to ITensorMPS.truncate!
+
+# Returns
+- `SimpleTensorTrain`: A new truncated tensor train
+"""
 function truncate(stt::SimpleTensorTrain; cutoff::Real=default_cutoff(), maxdim::Int=default_maxdim(), kwargs...)::SimpleTensorTrain
     mps = ITensorMPS.MPS(stt)
     ITensorMPS.truncate!(mps; cutoff=cutoff, maxdim=maxdim, kwargs...)
     return SimpleTensorTrain(mps)
 end
 
+"""
+    maxlinkdim(stt::SimpleTensorTrain)
+
+Get the maximum link (bond) dimension in a SimpleTensorTrain.
+
+This function computes the maximum dimension of the bond indices
+connecting adjacent tensors in the tensor train.
+
+# Arguments
+- `stt::SimpleTensorTrain`: The tensor train to analyze
+
+# Returns
+- `Int`: Maximum bond dimension
+"""
 function maxlinkdim(stt::SimpleTensorTrain)
     return ITensorMPS.maxlinkdim(ITensorMPS.MPO(stt))
 end
@@ -378,4 +443,18 @@ function _extractsite(x::SimpleTensorTrain, n::Int)::Vector{Index}
     end
 end
 
+"""
+    siteinds(x::SimpleTensorTrain)
+
+Extract the site indices from each tensor in a SimpleTensorTrain.
+
+This function returns a vector of index vectors, where each element contains
+the site (physical) indices for the corresponding tensor in the train.
+
+# Arguments
+- `x::SimpleTensorTrain`: The tensor train to extract site indices from
+
+# Returns
+- `Vector{Vector{Index}}`: Vector of site index vectors, one per tensor
+"""
 siteinds(x::SimpleTensorTrain) = [_extractsite(x, n) for n in eachindex(x)]
