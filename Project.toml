@@ -1,8 +1,8 @@
 name = "SimpleTensorTrains"
 uuid = "ff6377aa-e1b5-434b-8b4c-a9974c1be246"
+license = "Apache-2.0"
 authors = ["Hiroshi Shinaoka <h.shinaoka@gmail.com>"]
 version = "0.1.0"
-license = "Apache-2.0"
 
 [deps]
 ITensorMPS = "0d1a4710-d33b-49a5-8f18-73bdf49b47e2"
@@ -11,6 +11,7 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [compat]
 ITensorMPS = "0.3"
+ITensors = "0.9"
 julia = "1"
 
 [extras]
